@@ -1,15 +1,15 @@
 package com.musungare.BackendForReact.Customer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String surname;
@@ -17,6 +17,7 @@ public class Customer {
     private Long accountNumber;
     private String password;
     private double balance;
+    //LocalDateTime createdAt;
 
     @OneToMany(mappedBy="customerList")
     private List<TransactionHistory> transactionHistory;

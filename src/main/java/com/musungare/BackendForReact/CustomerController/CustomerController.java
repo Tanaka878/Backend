@@ -22,7 +22,7 @@ public class CustomerController {
         return customerService.getCustomers(accountNumber);
     }
 
-    @PostMapping()
+    @PostMapping(path = "/addCustomer")
     public void AddCustomers(@RequestBody Customer customer){
         customerService.AddCustomer(customer);
 
@@ -32,5 +32,13 @@ public class CustomerController {
     public void UpdateDetails(@PathVariable("accountNumber") Long accountNUmber,
                               @RequestParam(required = false) Double balance){
         customerService.UpdateCustomerDetails(accountNUmber,balance);
+    }
+
+    @PutMapping(path = "{accountNumber}/{amount}/{phoneNumber}")
+    public void TopUp(@PathVariable("accountNumber") String accountNumber,
+                                          @PathVariable("amount") Double amount,
+    @PathVariable("phoneNumber") Long phoneNumber){
+        customerService.TopUp(Long.parseLong(accountNumber), amount, phoneNumber);
+
     }
 }
