@@ -1,14 +1,13 @@
 package com.musungare.BackendForReact.CustomerController;
 
-import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerService.CustomerService;
+import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@RequestMapping("/customer")
 public class CustomerController {
-
 
     private final CustomerService customerService;
 
@@ -17,28 +16,24 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping(path = "{accountNumber}")
-    public Customer GetCustomers(@PathVariable("accountNumber") Long accountNumber){
-        return customerService.getCustomers(accountNumber);
+    @PostMapping("/top-up") // Change this to POST
+    public void topUpAccount(@RequestParam long accountNumber,
+                             @RequestParam Double amount,
+                             @RequestParam Long phoneNumber) {
+        // Call the service method to process the top-up
+        customerService.TopUp(accountNumber, amount, phoneNumber);
+        System.out.println(amount);
     }
 
-    @PostMapping(path = "/addCustomer")
-    public void AddCustomers(@RequestBody Customer customer){
-        customerService.AddCustomer(customer);
-
+    @GetMapping("/success")
+    public String paymentSuccess() {
+        // Handle successful payment
+        return "Payment successful!";
     }
 
-    @PutMapping(path = "{accountNumber}")
-    public void UpdateDetails(@PathVariable("accountNumber") Long accountNUmber,
-                              @RequestParam(required = false) Double balance){
-        customerService.UpdateCustomerDetails(accountNUmber,balance);
-    }
-
-    @PutMapping(path = "{accountNumber}/{amount}/{phoneNumber}")
-    public void TopUp(@PathVariable("accountNumber") String accountNumber,
-                                          @PathVariable("amount") Double amount,
-    @PathVariable("phoneNumber") Long phoneNumber){
-        customerService.TopUp(Long.parseLong(accountNumber), amount, phoneNumber);
-
+    @GetMapping("/cancel")
+    public String paymentCancel() {
+        // Handle canceled payment
+        return "Payment canceled!";
     }
 }
