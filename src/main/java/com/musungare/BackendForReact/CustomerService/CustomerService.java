@@ -24,8 +24,8 @@ public class CustomerService {
         this.payPalService = payPalService;
     }
 
-    public Customer getCustomers(Long accountNumber) {
-        return customerRepo.findCustomerByAccountNumber(accountNumber);
+    public Customer getCustomers(String email) {
+        return customerRepo.findCustomerByEmail(email);
     }
 
     public void AddCustomer(Customer customer) {
