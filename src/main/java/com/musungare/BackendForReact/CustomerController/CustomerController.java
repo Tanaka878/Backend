@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
-@CrossOrigin(origins = "http://localhost:3000")  // Adjust this to match your frontend URL
+//@CrossOrigin(origins = "http://localhost:3000")  // Adjust this to match your frontend URL
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -35,10 +35,10 @@ public class CustomerController {
 
     // POST request to top up account
     @PostMapping("/top-up")
-    public ResponseEntity<String> topUpAccount(@RequestParam long accountNumber,
+    public ResponseEntity<String> topUpAccount(@RequestParam String email,
                                                @RequestParam Double amount,
                                                @RequestParam Long phoneNumber) {
-        customerService.TopUp(accountNumber, amount, phoneNumber);
+        customerService.TopUp(email, amount, phoneNumber);
         return ResponseEntity.ok("Top-up successful!");
     }
 

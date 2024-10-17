@@ -11,6 +11,6 @@ public interface CustomerRepo extends JpaRepository<Customer,Long> {
 
     Customer findCustomerByEmail(String email);
 
-    Customer findCustomerByAccountNumber(long accountNumber);
+
     
 }
