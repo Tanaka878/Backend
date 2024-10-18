@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -66,6 +67,11 @@ public class CustomerController {
         // If the customer doesn't exist, proceed to create the account
         customerService.AddCustomer(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body("Customer account created successfully");
+    }
+
+    @RequestMapping
+    public Principal getPrincipal(Principal principal) {
+        return principal;
     }
 
 }
