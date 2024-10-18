@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
-//@CrossOrigin(origins = "http://localhost:3000")  // Adjust this to match your frontend URL
+@CrossOrigin(origins = "http://localhost:3000")  // Adjust this to match your frontend URL
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -57,6 +57,7 @@ public class CustomerController {
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody Customer customer) {
+        System.out.println("Endpoint created");
         // Check if the customer already exists using email
         Optional<Customer> customerExists = Optional.ofNullable(customerService.getCustomers(customer.getEmail()));
 
