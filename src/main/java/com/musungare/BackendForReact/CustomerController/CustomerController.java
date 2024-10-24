@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
-@CrossOrigin(origins = "http://localhost:3000")  // Adjust this to match your frontend URL
+@CrossOrigin(origins = "*") // Adjust this to match your frontend URL
 public class CustomerController {
 
     private final CustomerService customerService;
