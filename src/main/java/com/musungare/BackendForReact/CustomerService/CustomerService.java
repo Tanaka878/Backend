@@ -6,6 +6,7 @@ import com.musungare.BackendForReact.BankAccout.Service.BankAccountService;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
+import com.musungare.BackendForReact.Email.MailSenderService;
 import com.musungare.BackendForReact.paypalConfig.PayPalService;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
@@ -13,6 +14,8 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,6 +29,9 @@ public class CustomerService {
     private final PayPalService payPalService;
     private final BankAccountService bankAccountService;
     private final BankAccountRepo bankAccountRepo;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
     @Autowired
     public CustomerService(CustomerRepo customerRepo, PayPalService payPalService, BankAccountService bankAccountService, BankAccountRepo bankAccountRepo) {
@@ -60,6 +66,17 @@ public class CustomerService {
             bankAccount.setBalance(0.0);
             bankAccount.setEmail(customer.getEmail());
             bankAccount.setAccountType(Currency.ZIG);
+            ///
+
+
+
+                String to = customer.getEmail(); // recipient email
+                String subject = "Welcome you account number is : " + random ;
+                String text = "Welcome to our banking application" + random;
+
+                mailSenderService.sendSimpleMail(to, subject, text);
+
+        ///
 
             bankAccountService.createBankAccount(bankAccount);
 

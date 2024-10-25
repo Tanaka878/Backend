@@ -17,12 +17,4 @@ public class BackendForReactApplication {
 		SpringApplication.run(BackendForReactApplication.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail() {
-		String to = "maxwelli20021@gmail.com"; // recipient email
-		String subject = "Welcome";
-		String text = "Welcome to our banking application";
-
-		mailSenderService.sendSimpleMail(to, subject, text);
-	}
 }
