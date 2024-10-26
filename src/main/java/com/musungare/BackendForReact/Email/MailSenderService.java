@@ -14,16 +14,25 @@ public class MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendSimpleMail(String to, String subject, String content) {
+    public void sendSimpleMail(String to, long accountNumber, String customerPassword) {
+
+        String subject = "Welcome to Accute E-banking Platform " ;
+        String text = "Your account number is" + accountNumber + "\nYour Password is" + customerPassword
+                +"\n Best Regards \nThe Team";
         try {
+
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
             message.setSubject(subject);
-            message.setText(content);
+            message.setText(text);
             mailSender.send(message);
             logger.info("Email sent successfully to {}", to);
         } catch (Exception e) {
             logger.error("Failed to send email to {}: {}", to, e.getMessage());
         }
+    }
+
+    public void sendHtmlMail(String to, String subject, String content) {
+
     }
 }

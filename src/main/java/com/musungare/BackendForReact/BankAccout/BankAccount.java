@@ -21,4 +21,6 @@ public class BankAccount {
     private Currency accountType;
     private String email;
 
+    public BankAccount(long random, double v, Currency currency, String email) {
+    }
 }

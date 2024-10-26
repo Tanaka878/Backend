@@ -14,10 +14,7 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.Random;
 
@@ -45,42 +42,29 @@ public class CustomerService {
         return customerRepo.findCustomerByEmail(email);
     }
 
+
     public void AddCustomer(Customer customer) {
         Random account = new Random();
-        long random = account.nextInt(90000) + 10000;
+        long customerAccount = account.nextInt(90000) + 10000;
 
-        Optional<BankAccount> optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(random));
+        Optional<BankAccount> optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(customerAccount));
         Optional<Customer> customerOptional = Optional.ofNullable(customerRepo.findCustomerByEmail(customer.getEmail()));
 
         while (optionalAccount.isPresent()) {
-            random = account.nextInt(90000) + 10000;
-            optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(random));
+            customerAccount = account.nextInt(90000) + 10000;
+            optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(customerAccount));
         }
 
         if (customerOptional.isPresent()) {
             throw new RuntimeException("Customer already exists");
         } else {
             //passed tests
-            BankAccount bankAccount = new BankAccount();
-            bankAccount.setAccountNumber(random);
-            bankAccount.setBalance(0.0);
-            bankAccount.setEmail(customer.getEmail());
-            bankAccount.setAccountType(Currency.ZIG);
-            ///
-
-
-
+            BankAccount bankAccount = new BankAccount(customerAccount,0.0,Currency.ZIG, customer.getEmail());
                 String to = customer.getEmail(); // recipient email
-                String subject = "Welcome you account number is : " + random ;
-                String text = "Welcome to our banking application" + random;
-
-                mailSenderService.sendSimpleMail(to, subject, text);
-
-        ///
+                String customerPassword = customer.getPassword();
+                mailSenderService.sendSimpleMail(to, customerAccount,customerPassword);
 
             bankAccountService.createBankAccount(bankAccount);
-
-            //customer.setAccountNumber(random);
             customerRepo.save(customer);
         }
     }
