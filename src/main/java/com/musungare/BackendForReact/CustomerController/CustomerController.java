@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -25,6 +26,21 @@ public class CustomerController {
     public CustomerController(CustomerService customerService, BankAccountRepo bankAccountRepo) {
         this.customerService = customerService;
         this.bankAccountRepo = bankAccountRepo;
+    }
+
+    @PostMapping("/resetPassword/{email}")
+    public ResponseEntity<String> resetPassword(@PathVariable String email) {
+        // Check if customer exists
+        Optional<Customer> customerOptional = Optional.ofNullable(customerService.getCustomers(email));
+
+        if (customerOptional.isPresent()) {
+            // Proceed to reset the password
+            customerService.ResetPassword(email);
+            return ResponseEntity.ok("Reset password email sent successfully.");
+        } else {
+            // Customer not found, return a 404 response
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+        }
     }
 
     // GET request to fetch customer details by account number

@@ -7,6 +7,7 @@ import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
 import com.musungare.BackendForReact.Email.MailSenderService;
+import com.musungare.BackendForReact.Utilities.RandomCodeGenerator;
 import com.musungare.BackendForReact.paypalConfig.PayPalService;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
@@ -26,6 +27,7 @@ public class CustomerService {
     private final PayPalService payPalService;
     private final BankAccountService bankAccountService;
     private final BankAccountRepo bankAccountRepo;
+    private final MailSenderService mailService;
 
 
     private final MailSenderService mailSenderService;
@@ -33,12 +35,13 @@ public class CustomerService {
     @Autowired
     public CustomerService(CustomerRepo customerRepo, PayPalService payPalService,
                            BankAccountService bankAccountService,
-                           BankAccountRepo bankAccountRepo,
+                           BankAccountRepo bankAccountRepo, MailSenderService mailService,
                            MailSenderService mailSenderService) {
         this.customerRepo = customerRepo;
         this.payPalService = payPalService;
         this.bankAccountService = bankAccountService;
         this.bankAccountRepo = bankAccountRepo;
+        this.mailService = mailService;
         this.mailSenderService = mailSenderService;
     }
 
@@ -110,6 +113,21 @@ public class CustomerService {
         } catch (PayPalRESTException e) {
             logger.error("An error occurred while processing myMethod: {}", e.getMessage(), e);
             throw new RuntimeException("Error creating PayPal payment: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void ResetPassword(String email) {
+        Optional<Customer> customerOptional = Optional.ofNullable(customerRepo.findCustomerByEmail(email));
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+
+            String otp = RandomCodeGenerator.generateCode(4);
+            customer.setPassword(otp);
+            customerRepo.save(customer);
+            mailService.ResetPassword(otp, email);
+
+
         }
     }
 }
