@@ -11,13 +11,18 @@ import org.slf4j.LoggerFactory;
 public class MailSenderService {
     private static final Logger logger = LoggerFactory.getLogger(MailSenderService.class);
 
+
+    private final JavaMailSender mailSender;
+
     @Autowired
-    private JavaMailSender mailSender;
+    public MailSenderService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     public void sendSimpleMail(String to, long accountNumber, String customerPassword) {
 
         String subject = "Welcome to Accute E-banking Platform " ;
-        String text = "Your account number is" + accountNumber + "\nYour Password is" + customerPassword
+        String text = "Your account number is :" + accountNumber + "\nYour Password is :" + customerPassword
                 +"\n Best Regards \nThe Team";
         try {
 
@@ -32,7 +37,4 @@ public class MailSenderService {
         }
     }
 
-    public void sendHtmlMail(String to, String subject, String content) {
-
-    }
 }
