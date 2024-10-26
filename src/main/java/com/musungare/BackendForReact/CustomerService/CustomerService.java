@@ -63,13 +63,19 @@ public class CustomerService {
             throw new RuntimeException("Customer already exists");
         } else {
             //passed tests
-            BankAccount bankAccount = new BankAccount(customerAccount,0.0,Currency.ZIG, customer.getEmail());
+            BankAccount bankAccount = new BankAccount();
+            bankAccount.setAccountNumber(customerAccount);
+            bankAccount.setAccountType(Currency.ZIG);
+            bankAccount.setEmail(customer.getEmail());
+            bankAccount.setBalance(0);
+            bankAccountService.createBankAccount(bankAccount);
+            customerRepo.save(customer);
+            //
                 String to = customer.getEmail(); // recipient email
                 String customerPassword = customer.getPassword();
                 mailSenderService.sendSimpleMail(to, customerAccount,customerPassword);
 
-            bankAccountService.createBankAccount(bankAccount);
-            customerRepo.save(customer);
+
         }
     }
 
