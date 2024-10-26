@@ -27,15 +27,19 @@ public class CustomerService {
     private final BankAccountService bankAccountService;
     private final BankAccountRepo bankAccountRepo;
 
-    @Autowired
-    private MailSenderService mailSenderService;
+
+    private final MailSenderService mailSenderService;
 
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, PayPalService payPalService, BankAccountService bankAccountService, BankAccountRepo bankAccountRepo) {
+    public CustomerService(CustomerRepo customerRepo, PayPalService payPalService,
+                           BankAccountService bankAccountService,
+                           BankAccountRepo bankAccountRepo,
+                           MailSenderService mailSenderService) {
         this.customerRepo = customerRepo;
         this.payPalService = payPalService;
         this.bankAccountService = bankAccountService;
         this.bankAccountRepo = bankAccountRepo;
+        this.mailSenderService = mailSenderService;
     }
 
     public Customer getCustomers(String email) {
@@ -79,6 +83,8 @@ public class CustomerService {
             throw new RuntimeException("Customer not found");
         }
     }
+
+
 
     public void TopUp(String email, Double amount, Long phoneNumber) {
         //use is to find account number

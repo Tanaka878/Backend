@@ -23,7 +23,7 @@ public class MailSenderService {
 
         String subject = "Welcome to Accute E-banking Platform " ;
         String text = "Your account number is :" + accountNumber + "\nYour Password is :" + customerPassword
-                +"\n Best Regards \nThe Team";
+                +"\n \n \nBest Regards \nThe Team";
         try {
 
             SimpleMailMessage message = new SimpleMailMessage();
