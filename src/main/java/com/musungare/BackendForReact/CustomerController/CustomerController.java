@@ -45,10 +45,15 @@ public class CustomerController {
     @PostMapping("/changePassword/{email}/{newPassword}")
     public ResponseEntity<Customer> changePassword(@PathVariable String email, @PathVariable String newPassword) {
 
-        customerService.changePassword(email, newPassword);
-        return ResponseEntity.ok(customerService.getCustomers(email));
+        if (customerService.getCustomers(email) == null) {
+            System.out.println("Password changed successfully");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
+        }else {
+            customerService.changePassword(email, newPassword);
+            return ResponseEntity.ok(customerService.getCustomers(email));
 
+        }
     }
 
     // GET request to fetch customer details by account number

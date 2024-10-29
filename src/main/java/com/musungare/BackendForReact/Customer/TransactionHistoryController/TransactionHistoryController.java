@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController()
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
+@RequestMapping("transactionHistory")
 public class TransactionHistoryController {
 
     private final TransactionHistoryService transactionHistoryService;
@@ -21,7 +22,7 @@ public class TransactionHistoryController {
 
 
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin("*")
     @GetMapping(path = "/history/{accountHolder}")
     public List<TransactionHistory> getTransactions(@PathVariable("accountHolder")Long accountHolder){
         return transactionHistoryService.getTransactionHistory(accountHolder);
