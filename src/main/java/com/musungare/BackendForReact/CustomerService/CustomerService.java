@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Random;
@@ -129,5 +130,14 @@ public class CustomerService {
 
 
         }
+    }
+
+    public ResponseEntity<Customer> changePassword(String email, String password) {
+        Customer customer = customerRepo.findCustomerByEmail(email);
+        if (customer != null) {
+            customer.setPassword(password);
+            return ResponseEntity.ok(customerRepo.save(customer));
+        }
+        else return ResponseEntity.notFound().build() ;
     }
 }

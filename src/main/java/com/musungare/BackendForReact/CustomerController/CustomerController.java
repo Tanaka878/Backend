@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
-@CrossOrigin(origins = "*") // Adjust this to match your frontend URL
+@CrossOrigin(origins = "*")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -41,6 +40,15 @@ public class CustomerController {
             // Customer not found, return a 404 response
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
         }
+    }
+
+    @PostMapping("/changePassword/{email}/{newPassword}")
+    public ResponseEntity<Customer> changePassword(@PathVariable String email, @PathVariable String newPassword) {
+
+        customerService.changePassword(email, newPassword);
+        return ResponseEntity.ok(customerService.getCustomers(email));
+
+
     }
 
     // GET request to fetch customer details by account number
