@@ -132,6 +132,7 @@ public class CustomerService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Customer> changePassword(String email, String password) {
         Customer customer = customerRepo.findCustomerByEmail(email);
         if (customer != null) {
