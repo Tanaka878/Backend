@@ -6,6 +6,7 @@ import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Utilities.InterBankTransferRequest;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class BankAccountController {
     BankAccountService bankAccountService;
     BankAccountRepo bankAccountRepo;
 
+    @Autowired
+    public BankAccountController(BankAccountRepo bankAccountRepo, BankAccountService bankAccountService) {
+        this.bankAccountRepo = bankAccountRepo;
+        this.bankAccountService = bankAccountService;
+    }
 
     @PostMapping("/interbankTransfer")
     public ResponseEntity<String> interbankTransfer(@RequestBody InterBankTransferRequest transferRequest) {
