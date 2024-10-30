@@ -17,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/banking")
 @Getter
 @Setter
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://front-end-gray-one.vercel.app")
+
 public class BankAccountController {
 
     BankAccountService bankAccountService;

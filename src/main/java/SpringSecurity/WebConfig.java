@@ -9,10 +9,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Allow access to all endpoints
-                .allowedOrigins("http://localhost:3000") // Your frontend origin
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed methods
+        registry.addMapping("/**") // Allow all endpoints
+                .allowedOrigins("https://front-end-gray-one.vercel.app") // Your frontend URL
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow specific methods
                 .allowedHeaders("*") // Allow all headers
-                .allowCredentials(true); // Enable credentials if needed
+                .allowCredentials(true); // Allow credentials
     }
 }
