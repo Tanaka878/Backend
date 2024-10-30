@@ -16,6 +16,7 @@ import java.util.Optional;
 @RequestMapping("/banking")
 @Getter
 @Setter
+@CrossOrigin(origins = "*")
 public class BankAccountController {
 
     BankAccountService bankAccountService;
