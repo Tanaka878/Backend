@@ -20,8 +20,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class BankAccountController {
 
-    private final BankAccountService bankAccountService;
-    private final BankAccountRepo bankAccountRepo;
+    BankAccountService bankAccountService;
+    BankAccountRepo bankAccountRepo;
 
     @Autowired
     public BankAccountController(BankAccountRepo bankAccountRepo, BankAccountService bankAccountService) {
@@ -41,9 +41,10 @@ public class BankAccountController {
                     transferRequest.getAmount(),
                     transferRequest.getBankName()
             );
-            return ResponseEntity.ok("Transfer successful!");
+            return ResponseEntity.ok("{\"message\": \"Transfer successful!\"}");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bank account not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\": \"Bank account not found\"}");
         }
     }
 }
