@@ -23,8 +23,13 @@ public class TransactionHistory {
     private Long receiver;
     private Double amount;
     private LocalDate localDate;
+
+    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
+
     private String comment;
     private String bankName;
 }
