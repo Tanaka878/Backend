@@ -17,12 +17,11 @@ import java.util.Optional;
 @RequestMapping("/banking")
 @Getter
 @Setter
-
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class BankAccountController {
 
-    BankAccountService bankAccountService;
-    BankAccountRepo bankAccountRepo;
+    private final BankAccountService bankAccountService;
+    private final BankAccountRepo bankAccountRepo;
 
     @Autowired
     public BankAccountController(BankAccountRepo bankAccountRepo, BankAccountService bankAccountService) {
@@ -47,5 +46,4 @@ public class BankAccountController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bank account not found");
         }
     }
-
 }
