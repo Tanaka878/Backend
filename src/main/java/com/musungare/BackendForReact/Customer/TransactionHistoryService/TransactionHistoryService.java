@@ -2,6 +2,9 @@ package com.musungare.BackendForReact.Customer.TransactionHistoryService;
 
 import com.musungare.BackendForReact.Customer.TransactionHistory;
 import com.musungare.BackendForReact.Customer.TransactionRepository.TransactionHistoryRepo;
+import com.musungare.BackendForReact.Utilities.TransactionStatus;
+import com.musungare.BackendForReact.Utilities.TransactionType;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,16 +23,12 @@ public class TransactionHistoryService {
         return transactionHistoryRepo.findAllByAccountHolder(accountHolder);
     }
 
+    @Transactional
     public void SaveTransaction(TransactionHistory history) {
 
-        //extracting  the body of the request.
-        Long acc = history.getAccountHolder();
-        double bal = history.getAmount();
-        String receiver = history.getReceiver();
-        LocalDate date = LocalDate.now();
 
-      TransactionHistory transactionHistory=
-              new TransactionHistory(acc,receiver,bal,date);
-        transactionHistoryRepo.save(transactionHistory);
+
+
+        transactionHistoryRepo.save(history);
     }
 }

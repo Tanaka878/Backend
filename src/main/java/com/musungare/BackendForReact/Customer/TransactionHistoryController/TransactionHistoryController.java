@@ -29,9 +29,9 @@ public class TransactionHistoryController {
 
     }
 
-    @PostMapping(path = "/receiveHistory")
+   /* @PostMapping(path = "/receiveHistory")
     public void saveTransactionHistory(@RequestBody TransactionHistory history){
         transactionHistoryService.SaveTransaction(history);
 
-    }
+    }*/
 }
