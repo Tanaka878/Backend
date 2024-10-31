@@ -27,20 +27,4 @@ public class TransactionHistory {
     private TransactionStatus status;
     private String comment;
     private String bankName;
-    private
-
-    public TransactionHistory(Long id, Long accountHolder, Long receiver,
-                              LocalDate localDate, Double amount,
-                              TransactionType transactionType, TransactionStatus status, String comment,
-                              String bankName) {
-        this.id = id;
-        this.accountHolder = accountHolder;
-        this.receiver = receiver;
-        this.localDate = LocalDate.now();
-        this.amount = amount;
-        this.transactionType = transactionType;
-        this.status = status;
-        this.comment = comment;
-        this.bankName = bankName;
-    }
 }
