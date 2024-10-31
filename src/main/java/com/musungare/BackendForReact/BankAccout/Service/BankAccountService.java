@@ -3,6 +3,7 @@ package com.musungare.BackendForReact.BankAccout.Service;
 import com.musungare.BackendForReact.BankAccout.BankAccount;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.TransactionHistory;
+import com.musungare.BackendForReact.Customer.TransactionRepository.TransactionHistoryRepo;
 import com.musungare.BackendForReact.Utilities.TransactionStatus;
 import com.musungare.BackendForReact.Utilities.TransactionType;
 import jakarta.transaction.Transactional;
@@ -15,11 +16,13 @@ import java.time.LocalDate;
 public class BankAccountService {
 
     BankAccountRepo bankAccountRepo;
+    TransactionHistoryRepo transactionHistoryRepo;
 
 
     @Autowired
-    public BankAccountService(BankAccountRepo bankAccountRepo) {
+    public BankAccountService(BankAccountRepo bankAccountRepo, TransactionHistoryRepo transactionHistoryRepo) {
         this.bankAccountRepo = bankAccountRepo;
+        this.transactionHistoryRepo = transactionHistoryRepo;
     }
 
     @Transactional
@@ -52,7 +55,7 @@ public class BankAccountService {
             transactionHistory.setStatus(TransactionStatus.SUCCESS);
             transactionHistory.setAmount(Double.valueOf(amount));
             transactionHistory.setComment("Transaction Successful");
-            bankAccountRepo.save(SenderAccount);
+            transactionHistoryRepo.save(transactionHistory);
 
             ///updating history of receiver
             TransactionHistory ReceiverTransationHistory = new TransactionHistory();
@@ -64,7 +67,7 @@ public class BankAccountService {
             transactionHistory.setStatus(TransactionStatus.SUCCESS);
             transactionHistory.setAmount(Double.valueOf(amount));
             transactionHistory.setComment("Transaction Successful");
-            bankAccountRepo.save(ReceiverAccount);
+        transactionHistoryRepo.save(ReceiverTransationHistory);
         }
 
     }
