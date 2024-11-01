@@ -1,43 +1,4 @@
-Banking Application Backend
 
-Welcome to the backend of our Banking Application – a powerful API that replicates essential online banking services for a seamless user experience. With this backend, users can perform various operations similar to those offered by traditional banking systems, including paying bills, buying airtime, paying fees, and checking their account balance.
-
-
-🌟 Features
-
-Our banking application backend offers the following features:
-
-    Bill Payments: Easily manage and pay your utility bills.
-    Airtime Purchases: Recharge your mobile network account directly from your bank balance.
-    School Fees Payments: Make education payments with ease.
-    Balance Check: View your current account balance and recent transactions.
-
-    Here’s an updated version of your README.md file to make it more structured and visually appealing:
-Banking Application Backend
-
-Welcome to the backend of our Banking Application – a powerful API that replicates essential online banking services for a seamless user experience. With this backend, users can perform various operations similar to those offered by traditional banking systems, including paying bills, buying airtime, paying fees, and checking their account balance.
-🌟 Features
-
-Our banking application backend offers the following features:
-
-    Bill Payments: Easily manage and pay your utility bills.
-    Airtime Purchases: Recharge your mobile network account directly from your bank balance.
-    School Fees Payments: Make education payments with ease.
-    Balance Check: View your current account balance and recent transactions.
-
-🚀 Built With
-
-This backend was created using the following technologies:
-<div align="center"> <img src="src/Images/Java-Logo.png" alt="Java" width="200" height="120"> <img src="src/Images/postgresql-logo.png" alt="PostgreSQL" width="200" height="200"/> <img src="src/Images/Spring_Framework-Logo.wine.png" alt="Spring Framework" width="200" height="200"/> <img src="src/Images/maven.png" alt="Maven" width="200" height="200"/> </div>
-
-    Java – Backend logic and core application structure.
-    Spring Boot – Framework for RESTful API development.
-    PostgreSQL – Database management and storage.
-    Maven – Dependency management and project building.
-
-
-    Here’s an updated version of your README.md file to make it more structured and visually appealing:
-Banking Application Backend
 
 Welcome to the backend of our Banking Application – a powerful API that replicates essential online banking services for a seamless user experience. With this backend, users can perform various operations similar to those offered by traditional banking systems, including paying bills, buying airtime, paying fees, and checking their account balance.
 🌟 Features
