@@ -54,20 +54,22 @@ public class BankAccountService {
             transactionHistory.setTransactionType(TransactionType.DEBIT);
             transactionHistory.setStatus(TransactionStatus.SUCCESS);
             transactionHistory.setAmount(Double.valueOf(amount));
+            transactionHistory.setOwnerEmail(bankAccountRepo.findEmailByAccountNumber(senderAccount));
             transactionHistory.setComment("Transaction Successful");
             transactionHistoryRepo.save(transactionHistory);
 
             ///updating history of receiver
             TransactionHistory ReceiverTransationHistory = new TransactionHistory();
-            transactionHistory.setBankName(bankName);
-             transactionHistory.setAccountHolder(senderAccount);
-            transactionHistory.setLocalDate(LocalDate.now());
+            ReceiverTransationHistory.setBankName(bankName);
+            ReceiverTransationHistory.setAccountHolder(senderAccount);
+            ReceiverTransationHistory.setLocalDate(LocalDate.now());
             //transactionHistory.setReceiver(receiverAccount);
-            transactionHistory.setTransactionType(TransactionType.CREDIT);
-            transactionHistory.setStatus(TransactionStatus.SUCCESS);
-            transactionHistory.setAmount(Double.valueOf(amount));
-            transactionHistory.setComment("Transaction Successful");
-        transactionHistoryRepo.save(ReceiverTransationHistory);
+            ReceiverTransationHistory.setTransactionType(TransactionType.CREDIT);
+            ReceiverTransationHistory.setStatus(TransactionStatus.SUCCESS);
+            ReceiverTransationHistory.setAmount(Double.valueOf(amount));
+            ReceiverTransationHistory.setOwnerEmail(bankAccountRepo.findEmailByAccountNumber(receiverAccount));
+            ReceiverTransationHistory.setComment("Transaction Successful");
+            transactionHistoryRepo.save(ReceiverTransationHistory);
         }
 
     }

@@ -23,7 +23,7 @@ public class TransactionHistory {
     private Long receiver;
     private Double amount;
     private LocalDate localDate;
-
+    private String ownerEmail;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
