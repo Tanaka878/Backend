@@ -16,8 +16,8 @@ public class TransactionHistoryService {
         this.transactionHistoryRepo = transactionHistoryRepo;
     }
 
-    public List<TransactionHistory> getTransactionHistory(Long accountHolder) {
-        return transactionHistoryRepo.findAllByAccountHolder(accountHolder);
+    public List<TransactionHistory> getTransactionHistory(String email) {
+        return transactionHistoryRepo.findByOwnerEmail(email);
     }
 
     @Transactional

@@ -8,7 +8,12 @@ import java.util.List;
 
 @Repository
 public interface TransactionHistoryRepo extends JpaRepository<TransactionHistory,Long> {
-    List<TransactionHistory> findAllByAccountHolder(Long accountHolder);
+    List<TransactionHistory> findByOwnerEmail(String email);
+   // List<TransactionHistory> findByOwnerEmail(String email);
+
+
+
+
 
 
 }
