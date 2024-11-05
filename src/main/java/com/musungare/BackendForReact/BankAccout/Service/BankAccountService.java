@@ -1,7 +1,5 @@
 package com.musungare.BackendForReact.BankAccout.Service;
 
-
-
 import com.musungare.BackendForReact.BankAccout.BankAccount;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.TransactionHistory;
@@ -42,6 +40,9 @@ public class BankAccountService {
 
         if (senderAccount.getBalance() < amount) {
             logger.info("Transaction failed: insufficient funds in sender's account.");
+            String comment = "Transaction failed: insufficient funds.";
+            saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment);
+
             return;
         }
 
@@ -51,13 +52,14 @@ public class BankAccountService {
 
         logger.info("Transaction Successful: {} transferred from account {} to account {}", amount, senderAccountNumber, receiverAccountNumber);
 
+        String comment = "Transfer Successful";
         // Record transaction histories
-        saveTransactionHistory(senderAccountNumber, receiverAccountNumber, bankName, amount, TransactionType.DEBIT, senderAccount);
-        saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount);
+        saveTransactionHistory(senderAccountNumber, receiverAccountNumber, bankName, amount, TransactionType.DEBIT, senderAccount, comment);
+        saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment);
     }
 
     private void saveTransactionHistory(Long accountNumber, Long counterpartAccount, String bankName, Long amount,
-                                        TransactionType transactionType, BankAccount account) {
+                                        TransactionType transactionType, BankAccount account, String comment) {
         TransactionHistory transactionHistory = new TransactionHistory();
         transactionHistory.setBankName(bankName);
         transactionHistory.setAccountHolder(accountNumber);
@@ -67,7 +69,7 @@ public class BankAccountService {
         transactionHistory.setStatus(TransactionStatus.SUCCESS);
         transactionHistory.setAmount(Double.valueOf(amount));
         transactionHistory.setOwnerEmail(account.getEmail());
-        transactionHistory.setComment("Transaction Successful");
+        transactionHistory.setComment(comment);
 
         transactionHistoryRepo.save(transactionHistory);
     }

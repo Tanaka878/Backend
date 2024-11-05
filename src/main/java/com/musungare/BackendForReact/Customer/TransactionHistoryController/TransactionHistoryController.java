@@ -23,9 +23,9 @@ public class TransactionHistoryController {
 
 
     @CrossOrigin("*")
-    @GetMapping(path = "/history/{accountHolder}")
-    public List<TransactionHistory> getTransactions(@PathVariable("accountHolder")Long accountHolder){
-        return transactionHistoryService.getTransactionHistory(accountHolder);
+    @GetMapping(path = "/history/{accountHolderEmail}")
+    public List<TransactionHistory> getTransactions(@PathVariable("accountHolderEmail")String email){
+        return transactionHistoryService.getTransactionHistory(email);
 
     }
 
