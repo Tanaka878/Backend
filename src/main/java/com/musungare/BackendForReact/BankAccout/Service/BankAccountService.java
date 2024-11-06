@@ -93,7 +93,12 @@ public class BankAccountService {
             String successUrl = "http://localhost:8080/success";
             Payment payment = payPalService.createPayment(amount, "USD", "paypal", "sale",
                     "Top-up for Customer " + bankAccount.getAccountNumber(), cancelUrl, successUrl);
-            bankAccount.setBalance(bankAccount.getBalance() - amount);
+            bankAccount.setBalance(bankAccount.getBalance() + amount);
+            bankAccountRepo.save(bankAccount);
+
+            //saving transaction history
+            saveTransactionHistory(bankAccount.getAccountNumber(),995757838L,"STEWARD BANK", amount.longValue(), TransactionType.CREDIT,bankAccount,"Top Successful");
+
 
         } catch (PayPalRESTException e) {
             logger.error("An error occurred while processing myMethod: {}", e.getMessage(), e);
