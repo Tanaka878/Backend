@@ -85,26 +85,7 @@ public class CustomerController {
         }
     }
 
-    // POST request to top up account
-    @PostMapping("/top-up")
-    public ResponseEntity<String> topUpAccount(@RequestParam String email,
-                                               @RequestParam Double amount,
-                                               @RequestParam Long phoneNumber) {
-        customerService.TopUp(email, amount, phoneNumber);
-        return ResponseEntity.ok("Top-up successful!");
-    }
 
-    // GET request to handle successful payment
-    @GetMapping("/success")
-    public ResponseEntity<String> paymentSuccess() {
-        return ResponseEntity.ok("Payment successful!");
-    }
-
-    // GET request to handle canceled payment
-    @GetMapping("/cancel")
-    public ResponseEntity<String> paymentCancel() {
-        return ResponseEntity.ok("Payment canceled!");
-    }
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody Customer customer) {

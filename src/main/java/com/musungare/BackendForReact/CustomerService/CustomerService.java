@@ -96,26 +96,7 @@ public class CustomerService {
 
 
 
-    public void TopUp(String email, Double amount, Long phoneNumber) {
-        //use is to find account number
-        Customer customer = customerRepo.findCustomerByEmail(email);
 
-        if (customer == null) {
-            throw new RuntimeException("Customer not found");
-        }
-
-        try {
-            BankAccount bankAccount = bankAccountRepo.findByEmail(email);
-            String cancelUrl = "http://localhost:8080/cancel";
-            String successUrl = "http://localhost:8080/success";
-            Payment payment = payPalService.createPayment(amount, "USD", "paypal", "sale",
-                    "Top-up for Customer " + bankAccount.getAccountNumber(), cancelUrl, successUrl);
-
-        } catch (PayPalRESTException e) {
-            logger.error("An error occurred while processing myMethod: {}", e.getMessage(), e);
-            throw new RuntimeException("Error creating PayPal payment: " + e.getMessage());
-        }
-    }
 
     @Transactional
     public void ResetPassword(String email) {

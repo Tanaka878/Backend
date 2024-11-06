@@ -47,4 +47,45 @@ public class BankAccountController {
                     .body("{\"error\": \"Bank account not found\"}");
         }
     }
+
+    // POST request to top up account
+    @PostMapping("/top-up/{email}/{amount}/{phoneNumber}")
+    public ResponseEntity<String> topUpAccount(@PathVariable String email,
+                                               @PathVariable Double amount,
+                                               @PathVariable Long phoneNumber) {
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
+
+        // Check if bank account exists
+        if (bankAccount.isEmpty()) {
+            return ResponseEntity.badRequest().body("Account not found.");
+        }
+
+        // (Optional) Check if phone number matches
+//        if (!bankAccount.get().getPhoneNumber().equals(phoneNumber)) {
+//            return ResponseEntity.badRequest().body("Phone number does not match.");
+//        }
+
+        // Top up the account
+        try {
+            bankAccountService.TopUp(email, amount, phoneNumber);
+            return ResponseEntity.ok("Top-up successful!");
+        } catch (Exception e) {
+            // Handle potential exceptions in the service layer
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Top-up failed: " + e.getMessage());
+        }
+    }
+
+
+    // GET request to handle successful payment
+    @GetMapping("/success")
+    public ResponseEntity<String> paymentSuccess() {
+        return ResponseEntity.ok("Payment successful!");
+    }
+
+    // GET request to handle canceled payment
+    @GetMapping("/cancel")
+    public ResponseEntity<String> paymentCancel() {
+        return ResponseEntity.ok("Payment canceled!");
+    }
 }

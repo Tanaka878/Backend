@@ -2,10 +2,14 @@ package com.musungare.BackendForReact.BankAccout.Service;
 
 import com.musungare.BackendForReact.BankAccout.BankAccount;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
+
 import com.musungare.BackendForReact.Customer.TransactionHistory;
 import com.musungare.BackendForReact.Customer.TransactionRepository.TransactionHistoryRepo;
 import com.musungare.BackendForReact.Utilities.TransactionStatus;
 import com.musungare.BackendForReact.Utilities.TransactionType;
+import com.musungare.BackendForReact.paypalConfig.PayPalService;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,13 @@ public class BankAccountService {
 
     private final BankAccountRepo bankAccountRepo;
     private final TransactionHistoryRepo transactionHistoryRepo;
+    private final PayPalService payPalService;
 
     @Autowired
-    public BankAccountService(BankAccountRepo bankAccountRepo, TransactionHistoryRepo transactionHistoryRepo) {
+    public BankAccountService(BankAccountRepo bankAccountRepo, TransactionHistoryRepo transactionHistoryRepo, PayPalService payPalService) {
         this.bankAccountRepo = bankAccountRepo;
         this.transactionHistoryRepo = transactionHistoryRepo;
+        this.payPalService = payPalService;
     }
 
     @Transactional
@@ -72,5 +78,26 @@ public class BankAccountService {
         transactionHistory.setComment(comment);
 
         transactionHistoryRepo.save(transactionHistory);
+    }
+
+
+    @Transactional
+    public void TopUp(String email, Double amount, Long phoneNumber) {
+        BankAccount bankAccount = bankAccountRepo.findByEmail(email);
+
+
+
+        try {
+
+            String cancelUrl = "http://localhost:8080/cancel";
+            String successUrl = "http://localhost:8080/success";
+            Payment payment = payPalService.createPayment(amount, "USD", "paypal", "sale",
+                    "Top-up for Customer " + bankAccount.getAccountNumber(), cancelUrl, successUrl);
+            bankAccount.setBalance(bankAccount.getBalance() - amount);
+
+        } catch (PayPalRESTException e) {
+            logger.error("An error occurred while processing myMethod: {}", e.getMessage(), e);
+            throw new RuntimeException("Error creating PayPal payment: " + e.getMessage());
+        }
     }
 }
