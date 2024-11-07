@@ -128,4 +128,20 @@ public class BankAccountService {
         }
 
     }
+
+    @Transactional
+    public void PayBills(Long accountNumber, String receiver, Double amount) {
+
+        BankAccount bankAccount = bankAccountRepo.findByAccountNumber(accountNumber);
+        double bankBalance = bankAccount.getBalance();
+
+        if (bankBalance < amount) {
+            logger.info("Transaction failed: insufficient funds.");
+        }
+        else {
+            bankAccount.setBalance(bankAccount.getBalance() - amount);
+            bankAccountRepo.save(bankAccount);
+            saveTransactionHistory(accountNumber,874645447L,"CBZ",amount.longValue(),TransactionType.DEBIT,bankAccount,"Bill paid",TransactionStatus.SUCCESS);
+        }
+    }
 }

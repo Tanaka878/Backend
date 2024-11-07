@@ -105,4 +105,14 @@ public class BankAccountController {
         }
     }
 
+    @PostMapping("payBills/{accountNumber}/{Receiver}/{amount}")
+    public ResponseEntity<String> payBills(@PathVariable Long accountNumber,@PathVariable String Receiver,@PathVariable Double amount) {
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(accountNumber));
+        if (bankAccount.isEmpty()) {
+            return ResponseEntity.badRequest().body("Account not found.");
+        }
+        bankAccountService.PayBills(accountNumber,Receiver,amount);
+        return ResponseEntity.ok("Payment successful!");
+    }
+
 }
