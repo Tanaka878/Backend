@@ -90,16 +90,19 @@ public class BankAccountController {
     }
 
     @PostMapping("/buyAirtime/{accountNumber}/{phoneNumber}/{amount}")
-    public void buyAirtime(@PathVariable Long accountNumber, @PathVariable Long phoneNumber, @PathVariable Double amount) {
+    public ResponseEntity<String> buyAirtime(
+            @PathVariable Long accountNumber,
+            @PathVariable Long phoneNumber,
+            @PathVariable Double amount) {
 
         Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(accountNumber));
+
         if (bankAccount.isEmpty()) {
-            ResponseEntity.badRequest().body("Account not found.");
+            return ResponseEntity.badRequest().body("Account not found.");
+        } else {
+            bankAccountService.buyAirtime(accountNumber, phoneNumber, amount);
+            return ResponseEntity.ok("Airtime purchase successful.");
         }
-        else {
-            bankAccountService.buyAirtime(accountNumber, phoneNumber,amount);
-        }
-
-
     }
+
 }
