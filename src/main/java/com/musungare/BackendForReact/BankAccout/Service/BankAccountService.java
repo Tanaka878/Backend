@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.time.LocalDate;
 
 @Service
@@ -47,7 +48,7 @@ public class BankAccountService {
         if (senderAccount.getBalance() < amount) {
             logger.info("Transaction failed: insufficient funds in sender's account.");
             String comment = "Transaction failed: insufficient funds.";
-            saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment);
+            saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment,TransactionStatus.FAILED);
 
             return;
         }
@@ -60,19 +61,19 @@ public class BankAccountService {
 
         String comment = "Transfer Successful";
         // Record transaction histories
-        saveTransactionHistory(senderAccountNumber, receiverAccountNumber, bankName, amount, TransactionType.DEBIT, senderAccount, comment);
-        saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment);
+        saveTransactionHistory(senderAccountNumber, receiverAccountNumber, bankName, amount, TransactionType.DEBIT, senderAccount, comment,TransactionStatus.SUCCESS);
+        saveTransactionHistory(receiverAccountNumber, senderAccountNumber, bankName, amount, TransactionType.CREDIT, receiverAccount, comment, TransactionStatus.SUCCESS);
     }
 
     private void saveTransactionHistory(Long accountNumber, Long counterpartAccount, String bankName, Long amount,
-                                        TransactionType transactionType, BankAccount account, String comment) {
+                                        TransactionType transactionType, BankAccount account, String comment ,TransactionStatus status) {
         TransactionHistory transactionHistory = new TransactionHistory();
         transactionHistory.setBankName(bankName);
         transactionHistory.setAccountHolder(accountNumber);
         transactionHistory.setLocalDate(LocalDate.now());
         transactionHistory.setReceiver(counterpartAccount);
         transactionHistory.setTransactionType(transactionType);
-        transactionHistory.setStatus(TransactionStatus.SUCCESS);
+        transactionHistory.setStatus(status);
         transactionHistory.setAmount(Double.valueOf(amount));
         transactionHistory.setOwnerEmail(account.getEmail());
         transactionHistory.setComment(comment);
@@ -104,5 +105,27 @@ public class BankAccountService {
             logger.error("An error occurred while processing myMethod: {}", e.getMessage(), e);
             throw new RuntimeException("Error creating PayPal payment: " + e.getMessage());
         }
+    }
+
+
+    @Transactional
+    public void buyAirtime(Long accountNumber, Long phoneNumber, Double amount) {
+        BankAccount bankAccount = bankAccountRepo.findByAccountNumber(accountNumber);
+
+        if (bankAccount.getBalance() < amount) {
+            logger.info("Transaction failed: insufficient funds.");
+            saveTransactionHistory(accountNumber, 30744667L,"STANBIC BANK", amount.longValue(), TransactionType.DEBIT,bankAccount,"Insufficient Balance",TransactionStatus.FAILED);
+
+        }
+        else {
+            double remainingBalance = bankAccount.getBalance() - amount;
+            bankAccount.setBalance(remainingBalance);
+            bankAccountRepo.save(bankAccount);
+            //saving transaction history
+            saveTransactionHistory(accountNumber, 30744667L,"STANBIC BANK", amount.longValue(), TransactionType.DEBIT,bankAccount,"Bought Airtime",TransactionStatus.SUCCESS);
+
+
+        }
+
     }
 }

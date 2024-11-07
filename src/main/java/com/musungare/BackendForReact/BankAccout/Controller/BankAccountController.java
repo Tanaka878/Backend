@@ -88,4 +88,18 @@ public class BankAccountController {
     public ResponseEntity<String> paymentCancel() {
         return ResponseEntity.ok("Payment canceled!");
     }
+
+    @PostMapping("/buyAirtime/{accountNumber}/{phoneNumber}/{amount}")
+    public void buyAirtime(@PathVariable Long accountNumber, @PathVariable Long phoneNumber, @PathVariable Double amount) {
+
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(accountNumber));
+        if (bankAccount.isEmpty()) {
+            ResponseEntity.badRequest().body("Account not found.");
+        }
+        else {
+            bankAccountService.buyAirtime(accountNumber, phoneNumber,amount);
+        }
+
+
+    }
 }
