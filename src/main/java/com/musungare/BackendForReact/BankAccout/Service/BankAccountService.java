@@ -98,7 +98,7 @@ public class BankAccountService {
             bankAccountRepo.save(bankAccount);
 
             //saving transaction history
-            saveTransactionHistory(bankAccount.getAccountNumber(),995757838L,"STEWARD BANK", amount.longValue(), TransactionType.CREDIT,bankAccount,"Top Successful");
+            saveTransactionHistory(bankAccount.getAccountNumber(),995757838L,"STEWARD BANK", amount.longValue(), TransactionType.CREDIT,bankAccount,"Top Successful",TransactionStatus.SUCCESS);
 
 
         } catch (PayPalRESTException e) {
