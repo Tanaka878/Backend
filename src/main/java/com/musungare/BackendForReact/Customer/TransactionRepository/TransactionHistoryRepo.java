@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TransactionHistoryRepo extends JpaRepository<TransactionHistory,Long> {
     List<TransactionHistory> findByOwnerEmail(String email);
-   // List<TransactionHistory> findByOwnerEmail(String email);
+
 
 
 
