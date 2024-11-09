@@ -15,11 +15,13 @@ public class GoogleMapsService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    // Fetch ATM locations based on latitude and longitude
     public String getATMLocations(double latitude, double longitude) {
         String url = String.format(PLACES_URL, latitude + "," + longitude, apiKey);
         return restTemplate.getForObject(url, String.class);
     }
 
+    // Fetch geocode (latitude, longitude) for the given address
     public String getGeocode(String address) {
         String url = String.format(GEOCODING_URL, address, apiKey);
         return restTemplate.getForObject(url, String.class);
