@@ -115,4 +115,16 @@ public class BankAccountController {
         return ResponseEntity.ok("Payment successful!");
     }
 
+    @PostMapping("/getBalance/{email}")
+    public ResponseEntity<String> getBalance(@PathVariable String email) {
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
+        if (bankAccount.isEmpty()) {
+            return ResponseEntity.badRequest().body("Account not found.");
+        }
+        // Fetch the current balance from the bank account
+        double balance = bankAccount.get().getBalance();
+        return ResponseEntity.ok("Current Balance: " + balance);
+    }
+
+
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class ATMController {
 
-
     private final GoogleMapsService googleMapsService;
 
     @Autowired
