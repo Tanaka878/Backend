@@ -24,4 +24,12 @@ public class ATMController {
     public String geocode(@RequestParam String address) {
         return googleMapsService.getGeocode(address);
     }
+
+
+    // Add this in ATMController.java
+    @GetMapping("/distance")
+    public String calculateDistance(@RequestParam String origin, @RequestParam String destination) {
+        return googleMapsService.getDistance(origin, destination);
+    }
+
 }

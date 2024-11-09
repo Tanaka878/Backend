@@ -24,4 +24,13 @@ public class GoogleMapsService {
         String url = String.format(GEOCODING_URL, address, apiKey);
         return restTemplate.getForObject(url, String.class);
     }
+
+    // Add this method in GoogleMapsService.java
+    private static final String DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&key=%s";
+
+    public String getDistance(String origin, String destination) {
+        String url = String.format(DISTANCE_MATRIX_URL, origin, destination, apiKey);
+        return restTemplate.getForObject(url, String.class);
+    }
+
 }
