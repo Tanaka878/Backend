@@ -122,4 +122,9 @@ public class CustomerService {
         }
         else return ResponseEntity.notFound().build() ;
     }
+
+    public ResponseEntity<Customer> getProfile(String email) {
+        Optional<Customer> customerOptional = Optional.ofNullable(customerRepo.findCustomerByEmail(email));
+        return customerOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

@@ -107,4 +107,9 @@ public class CustomerController {
         return principal;
     }
 
+    @GetMapping("/getProfile/{email}")
+    public ResponseEntity<Customer> getProfile(@PathVariable String email) {
+       return customerService.getProfile(email);
+    }
+
 }
