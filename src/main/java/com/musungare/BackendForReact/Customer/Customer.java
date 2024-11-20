@@ -3,6 +3,8 @@ package com.musungare.BackendForReact.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 
 @Entity
@@ -19,6 +21,7 @@ public class Customer {
     private String email;
 
     private String password;
+    private LocalDate localDate;
 
 
     public Customer() {
@@ -27,24 +30,28 @@ public class Customer {
     public Customer(Long id, String name,
                     String surname, String email,
                      String password,
-                    double balance) {
+                    LocalDate localDate
+                    ) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
 
         this.password = password;
+        this.localDate = localDate;
+
     }
 
     public Customer(String name,
                     String surname, String email,
                      String password,
-                    double balance) {
+                    LocalDate localDate) {
         this.name = name;
         this.surname = surname;
         this.email = email;
 
         this.password = password;
+        this.localDate = localDate;
     }
 
 
@@ -61,9 +68,8 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
-
                 ", password='" + password + '\'' +
-
+                ", localDate=" + localDate +
                 '}';
     }
 }

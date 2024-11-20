@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -89,7 +90,9 @@ public class CustomerController {
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody Customer customer) {
-        System.out.println("Endpoint created");
+        //setting date joined
+        Customer customer1 = customer;
+        customer1.setLocalDate(LocalDate.now());
         // Check if the customer already exists using email
         Optional<Customer> customerExists = Optional.ofNullable(customerService.getCustomers(customer.getEmail()));
 
