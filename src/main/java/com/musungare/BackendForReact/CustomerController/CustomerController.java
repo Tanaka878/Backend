@@ -101,7 +101,7 @@ public class CustomerController {
         }
 
         // If the customer doesn't exist, proceed to create the account
-        customerService.AddCustomer(customer);
+        customerService.AddCustomer(customer1);
         return ResponseEntity.status(HttpStatus.CREATED).body("Customer account created successfully");
     }
 
