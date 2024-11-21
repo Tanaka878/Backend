@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,6 +29,8 @@ public class Loan {
     private double interestRate;
     private double monthlyInstallment;
     private int monthsLeft;
-    private double email;
+    private String email;
+
+
 
 }
