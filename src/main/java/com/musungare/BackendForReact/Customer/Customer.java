@@ -1,5 +1,6 @@
 package com.musungare.BackendForReact.Customer;
 
+import com.musungare.BackendForReact.Utilities.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Customer {
     private String surname;
 
     private String email;
+    private Gender gender;
 
     private String password;
     private LocalDate localDate;
