@@ -20,6 +20,8 @@ public class Customer {
     private String surname;
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private String password;
