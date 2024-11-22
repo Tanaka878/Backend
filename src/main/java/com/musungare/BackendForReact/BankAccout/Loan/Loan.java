@@ -19,7 +19,7 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String loanId;
+    private Long loanId;
 
     private LocalDate loanDate;
     private long loanAmount;
