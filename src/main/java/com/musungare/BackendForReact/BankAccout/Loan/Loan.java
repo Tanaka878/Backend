@@ -1,9 +1,6 @@
 package com.musungare.BackendForReact.BankAccout.Loan;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +20,9 @@ public class Loan {
 
     private LocalDate loanDate;
     private long loanAmount;
+    @Enumerated(EnumType.STRING)
     private LoanType loanType;
+    @Enumerated(EnumType.STRING)
     private LoanStatus loanStatus;
     private int paybackPeriod;
     private double interestRate;

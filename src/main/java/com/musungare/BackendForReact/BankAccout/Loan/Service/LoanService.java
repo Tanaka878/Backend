@@ -7,6 +7,7 @@ import com.musungare.BackendForReact.Utilities.LoanHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,8 +27,17 @@ public class LoanService {
        double rate= LoanHelper.getInterestRate(loan.getPaybackPeriod(), loan.getLoanAmount(), loan.getLoanType());
         loan.setInterestRate(rate);
        double installment = LoanHelper.calculateMonthlyInstallment(loan.getLoanAmount(), rate, loan.getPaybackPeriod());
-       loan.setMonthlyInstallment(installment);
+
+
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String formattedInstallment = df.format(installment);
+        loan.setMonthlyInstallment(Double.parseDouble(formattedInstallment));
+
+
+        loan.setMonthlyInstallment(installment);
         loan.setLoanStatus(LoanStatus.PENDING);
+        loan.setMonthsLeft(loan.getPaybackPeriod());
 
         return ResponseEntity.ok().body(loanRepository.save(loan).toString());
     }
