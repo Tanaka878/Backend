@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class LoanService {
@@ -29,5 +30,9 @@ public class LoanService {
         loan.setLoanStatus(LoanStatus.PENDING);
 
         return ResponseEntity.ok().body(loanRepository.save(loan).toString());
+    }
+
+    public ResponseEntity<List<Loan>> getLoanDetails(String email) {
+       return ResponseEntity.ok().body(loanRepository.findByEmail(email));
     }
 }
