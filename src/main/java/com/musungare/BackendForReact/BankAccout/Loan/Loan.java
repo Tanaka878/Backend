@@ -22,7 +22,7 @@ public class Loan {
     private String loanId;
 
     private LocalDate loanDate;
-    private BigDecimal loanAmount;
+    private long loanAmount;
     private LoanType loanType;
     private LoanStatus loanStatus;
     private int paybackPeriod;

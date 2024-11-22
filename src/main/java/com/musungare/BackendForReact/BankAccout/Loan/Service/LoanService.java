@@ -1,9 +1,13 @@
 package com.musungare.BackendForReact.BankAccout.Loan.Service;
 
 import com.musungare.BackendForReact.BankAccout.Loan.Loan;
+import com.musungare.BackendForReact.BankAccout.Loan.LoanStatus;
 import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
+import com.musungare.BackendForReact.Utilities.LoanHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 public class LoanService {
@@ -15,6 +19,15 @@ public class LoanService {
     }
 
     public ResponseEntity<String> saveApplication(Loan loan) {
+        //logic for loans using helper classes
+
+        loan.setLoanDate(LocalDate.now());
+       double rate= LoanHelper.getInterestRate(loan.getPaybackPeriod(), loan.getLoanAmount(), loan.getLoanType());
+        loan.setInterestRate(rate);
+       double installment = LoanHelper.calculateMonthlyInstallment(loan.getLoanAmount(), rate, loan.getPaybackPeriod());
+       loan.setMonthlyInstallment(installment);
+        loan.setLoanStatus(LoanStatus.PENDING);
+
         return ResponseEntity.ok().body(loanRepository.save(loan).toString());
     }
 }
