@@ -144,4 +144,11 @@ public class BankAccountService {
             saveTransactionHistory(accountNumber,874645447L,"CBZ",amount.longValue(),TransactionType.DEBIT,bankAccount,"Bill paid",TransactionStatus.SUCCESS);
         }
     }
+
+    @Transactional
+    public void payFees(String email, String schoolAccount, Double amount, String bankName) {
+        BankAccount bankAccount = bankAccountRepo.findByEmail(email);
+        bankAccount.setBalance(bankAccount.getBalance() - amount);
+        saveTransactionHistory(bankAccount.getAccountNumber(), Long.parseLong(schoolAccount),bankName,Long.parseLong(String.valueOf(amount)),TransactionType.DEBIT,bankAccount,"Paid ",TransactionStatus.SUCCESS);
+    }
 }

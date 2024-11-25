@@ -126,5 +126,14 @@ public class BankAccountController {
         return ResponseEntity.ok("Current Balance: " + balance);
     }
 
+    @PostMapping("/payFees/{email}/{schoolAccount}/{amount}/{bankName}")
+    public ResponseEntity<String> payFees(@PathVariable String email,@PathVariable String schoolAccount,@PathVariable Double amount, @PathVariable String bankName) {
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
+        if (bankAccount.isEmpty()) {
+            return ResponseEntity.badRequest().body("Account not found.");
+        }
+        bankAccountService.payFees(email,schoolAccount,amount,bankName);
+        return ResponseEntity.ok("Pay fees successful!");
+    }
 
 }
