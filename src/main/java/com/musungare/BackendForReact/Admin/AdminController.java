@@ -17,9 +17,9 @@ public class AdminController {
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
     }
-
-    @GetMapping("/getAdmin/")
-     public ResponseEntity<Admin> getAdmin(@RequestBody AdminData admin) {
-        return adminService.getAdmin(admin.getEmail(), admin.getPassword());
+    @PostMapping("/getAdmin")
+    public ResponseEntity<Admin> getAdmin(@RequestBody AdminData adminData) {
+        return adminService.getAdmin(adminData.getEmail(), adminData.getPassword());
     }
+
 }
