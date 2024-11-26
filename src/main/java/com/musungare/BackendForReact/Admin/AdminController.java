@@ -1,5 +1,6 @@
 package com.musungare.BackendForReact.Admin;
 
+import com.musungare.BackendForReact.DTO.AdminData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/getAdmin/{email}/{password}")
-     public ResponseEntity<Admin> getAdmin(@PathVariable String email,@PathVariable String password) {
-        return adminService.getAdmin(email,password);
+    @GetMapping("/getAdmin/")
+     public ResponseEntity<Admin> getAdmin(@RequestBody AdminData admin) {
+        return adminService.getAdmin(admin.getEmail(), admin.getPassword());
     }
 }
