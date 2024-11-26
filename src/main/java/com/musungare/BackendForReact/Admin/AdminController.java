@@ -16,8 +16,8 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/getAdmin/{email}")
-     public ResponseEntity<Admin> getAdmin(@PathVariable String email) {
-        return adminService.getAdmin(email);
+    @GetMapping("/getAdmin/{email}/{password}")
+     public ResponseEntity<Admin> getAdmin(@PathVariable String email,@PathVariable String password) {
+        return adminService.getAdmin(email,password);
     }
 }

@@ -14,12 +14,17 @@ public class AdminService {
         this.adminRepository = adminRepository;
     }
 
-    public ResponseEntity<Admin> getAdmin(String email) {
+    public ResponseEntity<Admin> getAdmin(String email, String password) {
         Admin byEmail = adminRepository.findByEmail(email);
 
         if (byEmail != null) {
+            if (byEmail.getPassword().equals(password)) {
+                return ResponseEntity.ok(byEmail);
+            }
+            else {
+                return ResponseEntity.notFound().build();
+            }
 
-            return ResponseEntity.ok(byEmail);
         } else {
 
             return ResponseEntity.notFound().build();
