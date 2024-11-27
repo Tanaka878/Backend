@@ -1,5 +1,6 @@
 package com.musungare.BackendForReact.Admin;
 
+import com.musungare.BackendForReact.BankAccout.Loan.Loan;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.DTO.AdminData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class AdminController {
     @GetMapping("/getUsers/")
     public ResponseEntity<List<Customer>> getUsers() {
         return adminService.getAllUsers();
+    }
+
+    @GetMapping("/getLoans")
+    public ResponseEntity<List<Loan>> getLoans() {
+        return adminService.getLoans();
     }
 }

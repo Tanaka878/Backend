@@ -1,5 +1,7 @@
 package com.musungare.BackendForReact.Admin;
 
+import com.musungare.BackendForReact.BankAccout.Loan.Loan;
+import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,13 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final CustomerRepo customerRepo;
+   private final LoanRepository loanRepo;
 
     @Autowired
-    public AdminService(AdminRepository adminRepository, CustomerRepo customerRepo) {
+    public AdminService(AdminRepository adminRepository, CustomerRepo customerRepo, LoanRepository loanRepo) {
         this.adminRepository = adminRepository;
         this.customerRepo = customerRepo;
+        this.loanRepo = loanRepo;
     }
 
     public ResponseEntity<Admin> getAdmin(String email, String password) {
@@ -39,5 +43,10 @@ public class AdminService {
 
     public ResponseEntity<List<Customer>> getAllUsers() {
         return ResponseEntity.ok(customerRepo.findAll());
+    }
+
+    public ResponseEntity<List<Loan>> getLoans() {
+        return ResponseEntity.ok(loanRepo.findAll());
+
     }
 }
