@@ -60,7 +60,7 @@ public class AdminService {
 
     }
 
-    @GetMapping("/loans")
+    /*@GetMapping("/loans")
     public ResponseEntity<LoanDataDTO> getLoan(@RequestParam Long loanId, @RequestParam String email) {
         Loan loan = loanRepo.findById(loanId)
                 LoanDataDTO loanDataDTO = new LoanDataDTO();
@@ -71,7 +71,7 @@ public class AdminService {
 
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
         return ResponseEntity.ok(loan);
-    }
+    }*/
 
 
     @Transactional
