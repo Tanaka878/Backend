@@ -7,13 +7,10 @@ import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
-import com.musungare.BackendForReact.DTO.LoanDataDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,14 +72,14 @@ public class AdminService {
 
 
     @Transactional
-    public ResponseEntity<String> acceptLoan(Long loanId, String email) {
+    public ResponseEntity<String> acceptLoan(Long loanId) {
         Loan loan = loanRepo.findById(loanId).get();
         loan.setLoanStatus(LoanStatus.APPROVED);
         loanRepo.save(loan);
         long loanAmount = loan.getLoanAmount();
 
         //crediting the account in question
-        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
+        Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(loan.getEmail()));
         BankAccount bankAccount1 = bankAccount.get();
         bankAccount1.setBalance(bankAccount1.getBalance() + loanAmount);
 
