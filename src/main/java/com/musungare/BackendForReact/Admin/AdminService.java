@@ -7,10 +7,13 @@ import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
+import com.musungare.BackendForReact.DTO.LoanDataDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +60,19 @@ public class AdminService {
 
     }
 
-    public ResponseEntity<Loan> getLoan(Long loanId, String email) {
-       return ResponseEntity.ok(loanRepo.findById(loanId).get());
+    @GetMapping("/loans")
+    public ResponseEntity<LoanDataDTO> getLoan(@RequestParam Long loanId, @RequestParam String email) {
+        Loan loan = loanRepo.findById(loanId)
+                LoanDataDTO loanDataDTO = new LoanDataDTO();
+        loanDataDTO.setLoanId(loanId);
+        loanDataDTO.setEmail(email);
+        loanDataDTO.setLoanType(loan.getLoanType());
+        loanDataDTO.setPayback(loan.getPaybackPeriod())
+
+                .orElseThrow(() -> new RuntimeException("Loan not found"));
+        return ResponseEntity.ok(loan);
     }
+
 
     @Transactional
     public ResponseEntity<String> acceptLoan(Long loanId, String email) {

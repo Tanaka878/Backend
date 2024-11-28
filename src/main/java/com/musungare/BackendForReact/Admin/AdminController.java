@@ -1,6 +1,7 @@
 package com.musungare.BackendForReact.Admin;
 
 import com.musungare.BackendForReact.BankAccout.Loan.Loan;
+import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.DTO.AdminData;
 import com.musungare.BackendForReact.DTO.LoanDataDTO;
@@ -17,10 +18,12 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final LoanRepository loanRepo;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, LoanRepository loanRepo) {
         this.adminService = adminService;
+        this.loanRepo = loanRepo;
     }
     @PostMapping("/getAdmin")
     public ResponseEntity<Admin> getAdmin(@RequestBody AdminData adminData) {
@@ -37,20 +40,25 @@ public class AdminController {
         return adminService.getLoans();
     }
 
-    @GetMapping("/getLoanDetails/{loanId}/{email}")
-    public ResponseEntity<LoanDataDTO> getLoanDetails(@PathVariable Long loanId, @PathVariable String email) {
-        Loan loan = adminService.getLoan(loanId,email).getBody();
-        LoanDataDTO loanDataDTO = new LoanDataDTO();
-        if (loan != null) {
-            loanDataDTO.setLoanId(loan.getLoanId());
-            loanDataDTO.setLoanType(loan.getLoanType());
-            loanDataDTO.setPayback(loan.getPaybackPeriod());
-            loanDataDTO.setEmail(loan.getEmail());
+    @GetMapping("/loans")
+    public ResponseEntity<LoanDataDTO> getLoan(@RequestParam Long loanId, @RequestParam String email) {
+        Loan loan = loanRepo.findById(loanId)
+                .orElseThrow(() -> new RuntimeException("Loan not found"));
+
+        if (!loan.getEmail().equals(email)) {
+            throw new RuntimeException("Email does not match the loan record");
         }
 
-        return ResponseEntity.ok(loanDataDTO);
+        LoanDataDTO loanDataDTO = new LoanDataDTO();
+        loanDataDTO.setLoanId(loan.getLoanId());
+        loanDataDTO.setEmail(loan.getEmail());
+        loanDataDTO.setAmount(loan.getLoanAmount());
+        loanDataDTO.setPayback(loan.getPaybackPeriod());
+        loanDataDTO.setLoanType(loan.getLoanType());
 
+        return ResponseEntity.ok(loanDataDTO);
     }
+
 
     @PutMapping("/acceptLoan/{loanId}/{email}")
     public ResponseEntity<String> acceptLoan(@PathVariable Long loanId, @PathVariable String email) {
