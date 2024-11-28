@@ -65,9 +65,9 @@ public class AdminController {
         return adminService.acceptLoan(loanId);
     }
 
-    @PutMapping("/rejectLoan/{loanId}/{email}")
+    @PutMapping("/rejectLoan/{loanId}")
     public ResponseEntity<String> rejectLoan(@PathVariable Long loanId, @PathVariable String email) {
 
-        return adminService.rejectLoan(loanId,email);
+        return adminService.rejectLoan(loanId);
     }
 }

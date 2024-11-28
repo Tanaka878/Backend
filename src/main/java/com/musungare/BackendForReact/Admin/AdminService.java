@@ -88,7 +88,7 @@ public class AdminService {
     }
 
     @Transactional
-    public ResponseEntity<String> rejectLoan(Long loanId, String email) {
+    public ResponseEntity<String> rejectLoan(Long loanId) {
         Loan loan = loanRepo.findById(loanId).get();
         loan.setLoanStatus(LoanStatus.DECLINED);
         loanRepo.save(loan);
