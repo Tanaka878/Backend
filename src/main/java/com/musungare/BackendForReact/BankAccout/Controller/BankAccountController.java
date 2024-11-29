@@ -49,7 +49,7 @@ public class BankAccountController {
     }
 
     // POST request to top up account
-    @PostMapping("/top-up/{email}/{amount}/{phoneNumber}")
+    @PostMapping("/topUp/{email}/{amount}/{phoneNumber}")
     public ResponseEntity<String> topUpAccount(@PathVariable String email,
                                                @PathVariable Double amount,
                                                @PathVariable Long phoneNumber) {
@@ -59,6 +59,7 @@ public class BankAccountController {
         if (bankAccount.isEmpty()) {
             return ResponseEntity.badRequest().body("Account not found.");
         }
+        System.out.println("Account found: " + bankAccount.get().getBalance());
 
         // (Optional) Check if phone number matches
 //        if (!bankAccount.get().getPhoneNumber().equals(phoneNumber)) {
@@ -68,9 +69,11 @@ public class BankAccountController {
         // Top up the account
         try {
             bankAccountService.TopUp(email, amount, phoneNumber);
+            System.out.println("Top up successful!");
             return ResponseEntity.ok("Top-up successful!");
         } catch (Exception e) {
             // Handle potential exceptions in the service layer
+            System.out.println("Top up failed! on try block ");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Top-up failed: " + e.getMessage());
         }
