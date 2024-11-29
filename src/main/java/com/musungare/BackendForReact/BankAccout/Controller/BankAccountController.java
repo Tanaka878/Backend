@@ -118,7 +118,7 @@ public class BankAccountController {
         return ResponseEntity.ok("Payment successful!");
     }
 
-    @PostMapping("/getBalance/{email}")
+    @GetMapping("/getBalance/{email}")
     public ResponseEntity<String> getBalance(@PathVariable String email) {
         Optional<BankAccount> bankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
         if (bankAccount.isEmpty()) {
