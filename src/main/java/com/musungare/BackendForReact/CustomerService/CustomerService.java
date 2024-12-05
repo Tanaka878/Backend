@@ -9,8 +9,8 @@ import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
 import com.musungare.BackendForReact.Email.MailSenderService;
 import com.musungare.BackendForReact.Utilities.RandomCodeGenerator;
 import com.musungare.BackendForReact.paypalConfig.PayPalService;
-import com.paypal.api.payments.Payment;
-import com.paypal.base.rest.PayPalRESTException;
+
+
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,6 @@ public class CustomerService {
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     private final CustomerRepo customerRepo;
-    private final PayPalService payPalService;
     private final BankAccountService bankAccountService;
     private final BankAccountRepo bankAccountRepo;
     private final MailSenderService mailService;
@@ -39,7 +38,6 @@ public class CustomerService {
                            BankAccountRepo bankAccountRepo, MailSenderService mailService,
                            MailSenderService mailSenderService) {
         this.customerRepo = customerRepo;
-        this.payPalService = payPalService;
         this.bankAccountService = bankAccountService;
         this.bankAccountRepo = bankAccountRepo;
         this.mailService = mailService;
@@ -53,15 +51,19 @@ public class CustomerService {
 
     public void AddCustomer(Customer customer) {
         Random account = new Random();
-        long customerAccount = account.nextInt(90000) + 10000;
+
+// Generate a 10-digit account number
+        long customerAccount = 1000000000L + account.nextLong(9000000000L);
 
         Optional<BankAccount> optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(customerAccount));
         Optional<Customer> customerOptional = Optional.ofNullable(customerRepo.findCustomerByEmail(customer.getEmail()));
 
+// Ensure uniqueness by regenerating if the account number already exists
         while (optionalAccount.isPresent()) {
-            customerAccount = account.nextInt(90000) + 10000;
+            customerAccount = 1000000000L + account.nextLong(9000000000L);
             optionalAccount = Optional.ofNullable(bankAccountRepo.findByAccountNumber(customerAccount));
         }
+
 
         if (customerOptional.isPresent()) {
             throw new RuntimeException("Customer already exists");
