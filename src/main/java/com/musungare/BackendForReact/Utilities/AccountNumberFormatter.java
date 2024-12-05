@@ -18,7 +18,8 @@ public class AccountNumberFormatter {
         }
 
 
-        return accountStr.substring(0, 4) + "-" + accountStr.substring(4);
+        return  accountStr.substring(0, 3) + "-" + accountStr.substring(3, 6) + "-" + accountStr.substring(6);
+
     }
 
 }
