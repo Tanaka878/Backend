@@ -73,7 +73,7 @@ public class CustomerService {
             bankAccount.setAccountNumber(customerAccount);
             bankAccount.setAccountType(Currency.ZIG);
             bankAccount.setEmail(customer.getEmail());
-            bankAccount.setBalance(0);
+            bankAccount.setBalance(1200);
             bankAccountService.createBankAccount(bankAccount);
             customerRepo.save(customer);
             //
