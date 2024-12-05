@@ -1,5 +1,6 @@
 package com.musungare.BackendForReact.Email;
 
+import com.musungare.BackendForReact.Utilities.AccountNumberFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,8 +21,10 @@ public class MailSenderService {
     }
 
     public void sendSimpleMail(String to, long accountNumber, String customerPassword) {
+
+       String acc =  AccountNumberFormatter.formatAccountNumber(accountNumber);
         String subject = "Welcome to Accute E-banking Platform ";
-        String text = "Your account number is: " + accountNumber + "\nYour Password is: " + customerPassword
+        String text = "Your account number is: " + acc + "\nYour Password is: " + customerPassword
                 + "\n\nBest Regards\nThe Team";
 
         try {
