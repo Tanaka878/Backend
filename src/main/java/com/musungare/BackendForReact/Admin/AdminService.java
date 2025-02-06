@@ -57,19 +57,6 @@ public class AdminService {
 
     }
 
-    /*@GetMapping("/loans")
-    public ResponseEntity<LoanDataDTO> getLoan(@RequestParam Long loanId, @RequestParam String email) {
-        Loan loan = loanRepo.findById(loanId)
-                LoanDataDTO loanDataDTO = new LoanDataDTO();
-        loanDataDTO.setLoanId(loanId);
-        loanDataDTO.setEmail(email);
-        loanDataDTO.setLoanType(loan.getLoanType());
-        loanDataDTO.setPayback(loan.getPaybackPeriod())
-
-                .orElseThrow(() -> new RuntimeException("Loan not found"));
-        return ResponseEntity.ok(loan);
-    }*/
-
 
     @Transactional
     public ResponseEntity<String> acceptLoan(Long loanId) {
