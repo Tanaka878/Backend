@@ -12,7 +12,6 @@ import java.util.Map;
 @Configuration
 public class PayPalConfig {
 
-    // Hardcoded PayPal credentials (not recommended for production)
     private String clientId = "AUVBBDr3CiV8Ar2_ujBwIkWib9UMWmpJnFCCrIIMDsKrVUVNvUuapNK_rs9zR9xqshKs1Wk-yEfM4ok4";
     private String clientSecret = "EG17rHXl_5O9AKYgCktKOkBlTTLvHi_xGxsqXRpahKxxufhHtJmQYkiayFLIXxBiBvierzobJQUbIB4j";
     private String mode = "sandbox"; // or "live" depending on your setup

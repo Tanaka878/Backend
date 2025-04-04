@@ -7,6 +7,7 @@ import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.BankAccout.repo.BankAccountRepo;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.CustomerRepository.CustomerRepo;
+import com.musungare.BackendForReact.DTO.Statistics;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +81,26 @@ public class AdminService {
         loan.setLoanStatus(LoanStatus.DECLINED);
         loanRepo.save(loan);
         return ResponseEntity.ok("Loan Rejected");
+
+    }
+
+    public ResponseEntity<Statistics> getStatistics() {
+        Statistics statistics = new Statistics();
+
+
+        //getting all users
+       Long customers = customerRepo.findAll().stream().count();
+       statistics.setUsers(customers.intValue());
+
+       Long loans = loanRepo.findAll().stream().filter(loan -> loan.getLoanStatus() == LoanStatus.PENDING).count();
+
+        List<Loan> notification = loanRepo.findAll().stream().filter(loan -> loan.getLoanStatus() == LoanStatus.PENDING).toList();
+        statistics.setLoans(notification);
+        statistics.setPending(loans.intValue());
+
+        return ResponseEntity.ok(statistics);
+
+
 
     }
 }

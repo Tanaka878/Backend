@@ -5,6 +5,7 @@ import com.musungare.BackendForReact.BankAccout.Loan.Repository.LoanRepository;
 import com.musungare.BackendForReact.Customer.Customer;
 import com.musungare.BackendForReact.DTO.AdminData;
 import com.musungare.BackendForReact.DTO.LoanDataDTO;
+import com.musungare.BackendForReact.DTO.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +70,10 @@ public class AdminController {
     public ResponseEntity<String> rejectLoan(@PathVariable Long loanId) {
 
         return adminService.rejectLoan(loanId);
+    }
+
+    @RequestMapping("/getStats")
+    public ResponseEntity<Statistics> getStats() {
+        return adminService.getStatistics();
     }
 }
