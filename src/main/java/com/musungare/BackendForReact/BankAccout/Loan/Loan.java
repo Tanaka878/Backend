@@ -30,6 +30,4 @@ public class Loan {
     private int monthsLeft;
     private String email;
 
-
-
 }
