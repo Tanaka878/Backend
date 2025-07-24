@@ -3,6 +3,7 @@ package com.musungare.BackendForReact.paypalConfig;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,9 +13,14 @@ import java.util.Map;
 @Configuration
 public class PayPalConfig {
 
-    private String clientId = "AUVBBDr3CiV8Ar2_ujBwIkWib9UMWmpJnFCCrIIMDsKrVUVNvUuapNK_rs9zR9xqshKs1Wk-yEfM4ok4";
-    private String clientSecret = "EG17rHXl_5O9AKYgCktKOkBlTTLvHi_xGxsqXRpahKxxufhHtJmQYkiayFLIXxBiBvierzobJQUbIB4j";
-    private String mode = "sandbox"; // or "live" depending on your setup
+    @Value("${paypal.client.id}")
+    private String clientId;
+
+    @Value("${paypal.client.secret}")
+    private String clientSecret;
+
+    @Value("${paypal.mode}")
+    private String mode;
 
     @Bean
     public Map<String, String> paypalSdkConfig() {

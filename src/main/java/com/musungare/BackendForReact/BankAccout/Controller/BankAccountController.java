@@ -126,7 +126,7 @@ public class BankAccountController {
         }
         // Fetch the current balance from the bank account
         double balance = bankAccount.get().getBalance();
-        return ResponseEntity.ok("Current Balance: " + balance);
+        return ResponseEntity.ok(String.valueOf(balance));
     }
 
     @PostMapping("/payFees/{email}/{schoolAccount}/{amount}/{bankName}")

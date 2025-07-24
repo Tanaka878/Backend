@@ -61,6 +61,7 @@ public class CustomerController {
     // GET request to fetch customer details by account number
     @GetMapping("/{email}")
     public ResponseEntity<CustomerBankAccountDTO> getCustomerByAccountNumber(@PathVariable String email) {
+        System.out.println("The email :" + email);
         Customer customer = customerService.getCustomers(email);
         Optional<BankAccount> OptionalbankAccount = Optional.ofNullable(bankAccountRepo.findByEmail(email));
 
@@ -82,6 +83,7 @@ public class CustomerController {
 
             return ResponseEntity.ok(customerBankAccountDTO);
         } else {
+            System.out.println("Customer not found");
             return ResponseEntity.notFound().build();
         }
     }
